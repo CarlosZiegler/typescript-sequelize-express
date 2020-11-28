@@ -1,4 +1,8 @@
 module.exports = {
+  roots: ['<rootDir>/src'],
+  coverageDirectory: 'coverage',
   testEnvironment: 'node',
-  setupFilesAfterEnv: ['./jest.setup.js']
+  transform: {
+    '.+\\.ts$': 'ts-jest',
+  },
 };

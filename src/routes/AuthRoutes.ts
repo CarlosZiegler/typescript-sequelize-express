@@ -1,8 +1,8 @@
-const express = require('express');
-const passport = require('passport');
-const AuthController = require('../controllers/AuthController');
+import * as express from 'express';
+import * as passport from 'passport';
+import { AuthController } from '../controllers/AuthController';
 
-const routes = express.Router();
+export const AuthRoutes = express.Router();
 
 /**
  * @swagger
@@ -11,7 +11,7 @@ const routes = express.Router();
  *    description: create a user
  *
  */
-routes.post(
+AuthRoutes.post(
   '/signup',
   passport.authenticate('signup', { session: false }),
   AuthController.store
@@ -23,10 +23,8 @@ routes.post(
  *    description: Sign in with email and password
  *
  */
-routes.post(
+AuthRoutes.post(
   '/login',
   passport.authenticate('login', { session: false }),
   AuthController.index
 );
-
-module.exports = routes;

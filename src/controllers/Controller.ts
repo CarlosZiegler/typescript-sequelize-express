@@ -1,4 +1,4 @@
-module.exports = {
+export const Controllers = {
   async index(req, res, next) {
     try {
       res.json({ message: 'Ok' });

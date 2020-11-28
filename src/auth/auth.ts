@@ -1,10 +1,11 @@
-const passport = require('passport');
-const jwtSecret = require('../../jwtConfig');
+import * as passport from 'passport';
+import * as jwtSecret from '../../jwtConfig';
 const ExtractJWT = require('passport-jwt').ExtractJwt;
 const localStrategy = require('passport-local').Strategy;
-const UserModel = require('../models/User');
+import { default as UserModel } from '../models/User';
 const JWTstrategy = require('passport-jwt').Strategy;
-const bcrypt = require('bcrypt');
+import * as bcrypt from 'bcrypt';
+import { User } from '../models/User.entity';
 
 //Create a passport middleware to handle user registration
 passport.use(
@@ -17,6 +18,7 @@ passport.use(
     async (email, password, done) => {
       try {
         const user = await UserModel.findOne({ where: { email } });
+        console.log({ user });
         if (user) {
           return done(null, false, { message: 'Incorrect credentials.' });
         }
@@ -43,7 +45,9 @@ passport.use(
     },
     async (email, password, done) => {
       try {
-        const user = await UserModel.findOne({ where: { email: email } });
+        const user = ((await UserModel.findOne({
+          where: { email: email },
+        })) as any) as User;
         if (user == null) {
           return done(null, false, { message: 'Incorrect credentials.' });
         }

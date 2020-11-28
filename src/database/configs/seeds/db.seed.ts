@@ -1,5 +1,6 @@
-const db = require('../db.config');
-const User = require('../models/User');
+import db from '../db.config';
+import UserModel from '../../../models/User';
+import { User } from '../../../models/User.entity';
 const bcrypt = require('bcrypt');
 
 const seed = async () => {
@@ -8,13 +9,14 @@ const seed = async () => {
   const password = `1212`;
   const email = 'carlos@gmail.com';
   const hash = await bcrypt.hash(password, 10);
-  User.create({
+  UserModel.create({
     password: hash,
     email: email,
   })
-    .then((user) => {
+    .then((user: any) => {
       console.log('seeded user', user);
-      User.findOne({ where: { email: `${user.email}` } })
+
+      UserModel.findOne({ where: { email: `${user.email}` } })
         .then((user) => {
           console.log('found in db after adding');
           db.close();
